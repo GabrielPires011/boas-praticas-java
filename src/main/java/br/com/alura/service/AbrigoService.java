@@ -8,11 +8,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
-import static br.com.alura.service.HttpService.disparaRequisicao;
-
 public class AbrigoService {
 
-    public static void importarPetsAbrigo() throws IOException, InterruptedException {
+    private HttpService httpService;
+
+    public AbrigoService(HttpService httpService) {
+        this.httpService = httpService;
+    }
+
+    public void importarPetsAbrigo() throws IOException, InterruptedException {
         System.out.println("Digite o id ou nome do abrigo:");
         var idOuNome = new Scanner(System.in).nextLine();
 
@@ -46,7 +50,7 @@ public class AbrigoService {
 
             var uri = "http://localhost:8080/abrigos/" + idOuNome + "/pets";
 
-            var response = disparaRequisicao(uri, "application/json", "POST", json);
+            var response = httpService.disparaRequisicao(uri, "application/json", "POST", json);
             var statusCode = response.statusCode();
             var responseBody = response.body();
             if (statusCode == 200) {
@@ -63,13 +67,13 @@ public class AbrigoService {
         reader.close();
     }
 
-    public static void listarPetsDoAbrigo() throws IOException, InterruptedException {
+    public void listarPetsDoAbrigo() throws IOException, InterruptedException {
         System.out.println("Digite o id ou nome do abrigo:");
         var idOuNome = new Scanner(System.in).nextLine();
 
         var uri = "http://localhost:8080/abrigos/" +idOuNome +"/pets";
 
-        var response = disparaRequisicao(uri, null, "GET", null);
+        var response = httpService.disparaRequisicao(uri, null, "GET", null);
         var statusCode = response.statusCode();
         if (statusCode == 404 || statusCode == 500) {
             System.out.println("ID ou nome não cadastrado!");
@@ -89,7 +93,7 @@ public class AbrigoService {
         }
     }
 
-    public static void cadastrarAbrigo() throws IOException, InterruptedException {
+    public void cadastrarAbrigo() throws IOException, InterruptedException {
         System.out.println("Digite o nome do abrigo:");
         var nome = new Scanner(System.in).nextLine();
         System.out.println("Digite o telefone do abrigo:");
@@ -104,7 +108,7 @@ public class AbrigoService {
 
         var uri = "http://localhost:8080/abrigos";
 
-        var response = disparaRequisicao(uri, "application/json", "POST", json);
+        var response = httpService.disparaRequisicao(uri, "application/json", "POST", json);
         var statusCode = response.statusCode();
         var responseBody = response.body();
         if (statusCode == 200) {
@@ -116,9 +120,9 @@ public class AbrigoService {
         }
     }
 
-    public static void listarAbrigo() throws IOException, InterruptedException {
+    public void listarAbrigo() throws IOException, InterruptedException {
         var uri = "http://localhost:8080/abrigos";
-        var responseBody = disparaRequisicao(uri, null, "GET", null).body();
+        var responseBody = httpService.disparaRequisicao(uri, null, "GET", null).body();
         var jsonArray = JsonParser.parseString(responseBody).getAsJsonArray();
         System.out.println("Abrigos cadastrados:");
         for (var element : jsonArray) {

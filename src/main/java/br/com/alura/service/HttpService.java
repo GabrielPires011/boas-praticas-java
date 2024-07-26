@@ -10,7 +10,7 @@ import java.net.http.HttpResponse;
 
 public class HttpService {
 
-    public static HttpResponse<String> disparaRequisicao(String uri, String contentType, String method, JsonObject json) throws IOException, InterruptedException {
+    public HttpResponse<String> disparaRequisicao(String uri, String contentType, String method, JsonObject json) throws IOException, InterruptedException {
         var client = HttpClient.newHttpClient();
         var builder = HttpRequest.newBuilder()
                 .uri(URI.create(uri))
