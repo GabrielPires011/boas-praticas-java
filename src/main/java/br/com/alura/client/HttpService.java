@@ -1,5 +1,7 @@
 package br.com.alura.client;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -12,7 +14,7 @@ public class HttpService {
         var client = HttpClient.newHttpClient();
         var builder = HttpRequest.newBuilder()
                 .uri(URI.create(uri))
-                .method(method, object == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(object.toString()));
+                .method(method, object == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(new Gson().toJson(object)));
 
         if (contentType != null) {
             builder.header("Content-Type", contentType);
