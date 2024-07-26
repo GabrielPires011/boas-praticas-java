@@ -1,7 +1,7 @@
 package br.com.alura.service;
 
 import br.com.alura.client.HttpService;
-import com.google.gson.JsonObject;
+import br.com.alura.domain.Pet;
 import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
@@ -41,17 +41,11 @@ public class PetsService {
             var cor = campos[4];
             var peso = Float.parseFloat(campos[5]);
 
-            var json = new JsonObject();
-            json.addProperty("tipo", tipo.toUpperCase());
-            json.addProperty("nome", nome);
-            json.addProperty("raca", raca);
-            json.addProperty("idade", idade);
-            json.addProperty("cor", cor);
-            json.addProperty("peso", peso);
+            var pet = new Pet(tipo, nome, raca, idade, cor, peso);
 
             var uri = "http://localhost:8080/abrigos/" + idOuNome + "/pets";
 
-            var response = httpService.disparaRequisicao(uri, "application/json", "POST", json);
+            var response = httpService.disparaRequisicao(uri, "application/json", "POST", pet);
             var statusCode = response.statusCode();
             var responseBody = response.body();
             if (statusCode == 200) {
