@@ -83,6 +83,6 @@ public class PetsService {
                 pet.getTipo() + " - " +
                 pet.getNome() + " - " +
                 pet.getRaca() + " - " +
-                pet.getId() + " ano(s)"));
+                pet.getIdade() + " ano(s)"));
     }
 }
