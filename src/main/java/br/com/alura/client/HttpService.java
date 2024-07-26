@@ -1,6 +1,4 @@
-package br.com.alura.service;
-
-import com.google.gson.JsonObject;
+package br.com.alura.client;
 
 import java.io.IOException;
 import java.net.URI;
@@ -10,11 +8,11 @@ import java.net.http.HttpResponse;
 
 public class HttpService {
 
-    public HttpResponse<String> disparaRequisicao(String uri, String contentType, String method, JsonObject json) throws IOException, InterruptedException {
+    public HttpResponse<String> disparaRequisicao(String uri, String contentType, String method, Object object) throws IOException, InterruptedException {
         var client = HttpClient.newHttpClient();
         var builder = HttpRequest.newBuilder()
                 .uri(URI.create(uri))
-                .method(method, json == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(json.toString()));
+                .method(method, object == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(object.toString()));
 
         if (contentType != null) {
             builder.header("Content-Type", contentType);
