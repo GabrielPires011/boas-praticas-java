@@ -2,11 +2,12 @@ package br.com.alura.service;
 
 import br.com.alura.client.HttpService;
 import br.com.alura.domain.Pet;
-import com.google.gson.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class PetsService {
@@ -75,16 +76,13 @@ public class PetsService {
             return;
         }
         var responseBody = response.body();
-        var jsonArray = JsonParser.parseString(responseBody).getAsJsonArray();
+        var readValue = new ObjectMapper().readValue(responseBody, Pet[].class);
         System.out.println("Pets cadastrados:");
-        for (var element : jsonArray) {
-            var jsonObject = element.getAsJsonObject();
-            var id = jsonObject.get("id").getAsLong();
-            var tipo = jsonObject.get("tipo").getAsString();
-            var nome = jsonObject.get("nome").getAsString();
-            var raca = jsonObject.get("raca").getAsString();
-            var idade = jsonObject.get("idade").getAsInt();
-            System.out.println(id +" - " +tipo +" - " +nome +" - " +raca +" - " +idade +" ano(s)");
-        }
+        Arrays.stream(readValue).toList().forEach(pet -> System.out.println(
+                pet.getId() + " - " +
+                pet.getTipo() + " - " +
+                pet.getNome() + " - " +
+                pet.getRaca() + " - " +
+                pet.getId() + " ano(s)"));
     }
 }

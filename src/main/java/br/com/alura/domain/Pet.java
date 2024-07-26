@@ -3,7 +3,7 @@ package br.com.alura.domain;
 public class Pet {
     private Long id;
     private String tipo;
-    private String name;
+    private String nome;
     private String raca;
     private Integer idade;
     private String cor;
@@ -11,10 +11,30 @@ public class Pet {
 
     public Pet(String tipo, String name, String raca, Integer idade, String cor, Float peso) {
         this.tipo = tipo;
-        this.name = name;
+        this.nome = name;
         this.raca = raca;
         this.idade = idade;
         this.cor = cor;
         this.peso = peso;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getRaca() {
+        return raca;
+    }
+
+    public Integer getIdade() {
+        return idade;
     }
 }

@@ -2,9 +2,10 @@ package br.com.alura.service;
 
 import br.com.alura.client.HttpService;
 import br.com.alura.domain.Abrigo;
-import com.google.gson.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class AbrigoService {
@@ -41,13 +42,10 @@ public class AbrigoService {
     public void listarAbrigo() throws IOException, InterruptedException {
         var uri = "http://localhost:8080/abrigos";
         var responseBody = httpService.disparaRequisicao(uri, null, "GET", null).body();
-        var jsonArray = JsonParser.parseString(responseBody).getAsJsonArray();
+        var readValue = new ObjectMapper().readValue(responseBody, Abrigo[].class);
         System.out.println("Abrigos cadastrados:");
-        for (var element : jsonArray) {
-            var jsonObject = element.getAsJsonObject();
-            var id = jsonObject.get("id").getAsLong();
-            var nome = jsonObject.get("nome").getAsString();
-            System.out.println(id +" - " +nome);
-        }
+        Arrays.stream(readValue).toList().forEach(abrigo -> System.out.println(
+                abrigo.getId() + " - " +
+                        abrigo.getNome()));
     }
 }
