@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class AbrigoService {
@@ -43,8 +44,19 @@ public class AbrigoService {
         var uri = "http://localhost:8080/abrigos";
         var responseBody = httpService.disparaRequisicao(uri, null, "GET", null).body();
         var readValue = new ObjectMapper().readValue(responseBody, Abrigo[].class);
+        var abrigoList = Arrays.stream(readValue).toList();
+
+        if (abrigoList.isEmpty()) {
+            System.out.println("Não há abrigos cadastrados.");
+            return;
+        }
+
+        mostrarAbrigo(abrigoList);
+    }
+
+    private void mostrarAbrigo(List<Abrigo> abrigoList) {
         System.out.println("Abrigos cadastrados:");
-        Arrays.stream(readValue).toList().forEach(abrigo -> System.out.println(
+        abrigoList.forEach(abrigo -> System.out.println(
                 abrigo.getId() + " - " +
                         abrigo.getNome()));
     }
