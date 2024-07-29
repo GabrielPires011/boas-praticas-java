@@ -33,7 +33,7 @@ public class AbrigoServiceTest {
         PrintStream printStream = new PrintStream(baos);
         System.setOut(printStream);
 
-        when(response.body()).thenReturn("[{\"id\":0,\"nome\":\"Teste\"}]");
+        when(response.body()).thenReturn("[{"+ abrigo +"}]");
         when(client.disparaRequisicao(anyString(), isNull(), anyString(), isNull())).thenReturn(response);
 
         abrigoService.listarAbrigo();
