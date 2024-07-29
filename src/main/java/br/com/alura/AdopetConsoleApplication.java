@@ -1,17 +1,11 @@
 package br.com.alura;
 
-import br.com.alura.service.AbrigoService;
-import br.com.alura.client.HttpService;
-import br.com.alura.service.PetsService;
-
 import java.util.Scanner;
 
 public class AdopetConsoleApplication {
 
     public static void main(String[] args) {
-        var httpService = new HttpService();
-        var abrigoService = new AbrigoService(httpService);
-        var petsService = new PetsService(httpService);
+        CommandExecutor executor = new CommandExecutor();
         System.out.println("##### BOAS VINDAS AO SISTEMA ADOPET CONSOLE #####");
         try {
             var opcaoEscolhida = 0;
@@ -27,20 +21,13 @@ public class AdopetConsoleApplication {
                 opcaoEscolhida = Integer.parseInt(textoDigitado);
 
                 if (opcaoEscolhida == 1) {
-                    abrigoService.listarAbrigo();
+                    executor.executeCommand(new ListarAbrigosCommand());
                 } else if (opcaoEscolhida == 2) {
-                    abrigoService.cadastrarAbrigo();
+                    executor.executeCommand(new CadastrarAbrigoCommand());
                 } else if (opcaoEscolhida == 3) {
-                    System.out.println("Digite o id ou nome do abrigo:");
-                    var idOuNome = new Scanner(System.in).nextLine();
-                    petsService.listarPetsDoAbrigo(idOuNome);
+                    executor.executeCommand(new ListarPetsDoAbrigoCommand());
                 } else if (opcaoEscolhida == 4) {
-                    System.out.println("Digite o id ou nome do abrigo:");
-                    var idOuNome = new Scanner(System.in).nextLine();
-
-                    System.out.println("Digite o nome do arquivo CSV:");
-                    var nomeArquivo = new Scanner(System.in).nextLine();
-                    petsService.importarPetsAbrigo(idOuNome, nomeArquivo);
+                    executor.executeCommand(new ImportarPetsDoAbrigoCommand());
                 } else if (opcaoEscolhida == 5) {
                     break;
                 } else {
