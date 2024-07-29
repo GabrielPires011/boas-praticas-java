@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class PetsService {
 
@@ -18,13 +17,7 @@ public class PetsService {
         this.httpService = httpService;
     }
 
-    public void importarPetsAbrigo() throws IOException, InterruptedException {
-        System.out.println("Digite o id ou nome do abrigo:");
-        var idOuNome = new Scanner(System.in).nextLine();
-
-        System.out.println("Digite o nome do arquivo CSV:");
-        var nomeArquivo = new Scanner(System.in).nextLine();
-
+    public void importarPetsAbrigo(String idOuNome, String nomeArquivo) throws IOException, InterruptedException {
         BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader(nomeArquivo));
@@ -63,9 +56,11 @@ public class PetsService {
         reader.close();
     }
 
-    public void listarPetsDoAbrigo() throws IOException, InterruptedException {
-        System.out.println("Digite o id ou nome do abrigo:");
-        var idOuNome = new Scanner(System.in).nextLine();
+    public void listarPetsDoAbrigo(String idOuNome) throws IOException, InterruptedException {
+        if (idOuNome == null || idOuNome.isEmpty()) {
+            System.out.println("ID ou Nome não fornecido. Por favor, forneça um valor válido.");
+            return;
+        }
 
         var uri = "http://localhost:8080/abrigos/" +idOuNome +"/pets";
 

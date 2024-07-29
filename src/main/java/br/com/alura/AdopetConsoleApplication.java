@@ -31,9 +31,16 @@ public class AdopetConsoleApplication {
                 } else if (opcaoEscolhida == 2) {
                     abrigoService.cadastrarAbrigo();
                 } else if (opcaoEscolhida == 3) {
-                    petsService.listarPetsDoAbrigo();
+                    System.out.println("Digite o id ou nome do abrigo:");
+                    var idOuNome = new Scanner(System.in).nextLine();
+                    petsService.listarPetsDoAbrigo(idOuNome);
                 } else if (opcaoEscolhida == 4) {
-                    petsService.importarPetsAbrigo();
+                    System.out.println("Digite o id ou nome do abrigo:");
+                    var idOuNome = new Scanner(System.in).nextLine();
+
+                    System.out.println("Digite o nome do arquivo CSV:");
+                    var nomeArquivo = new Scanner(System.in).nextLine();
+                    petsService.importarPetsAbrigo(idOuNome, nomeArquivo);
                 } else if (opcaoEscolhida == 5) {
                     break;
                 } else {
